@@ -13,11 +13,15 @@ def get_user_email():
 def get_time():
     return datetime.datetime.utcnow()
 
+db.define_table(
+    'bird',
+    Field('species', 'string', requires=IS_NOT_EMPTY()),
+    Field('number_of_birds', 'integer', requires=IS_NOT_EMPTY()),
+    Field('location', 'string', requires=IS_NOT_EMPTY()),
+    Field('date', 'datetime', default=get_time),
+)
 
-### Define your table below
-#
-# db.define_table('thing', Field('name'))
-#
-## always commit your models to avoid problems later
+if not db(db.bird).count():
+    db.bird.insert(species='Pigeon', number_of_birds=10, location='New York')
 
 db.commit()
